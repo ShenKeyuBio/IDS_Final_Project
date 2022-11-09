@@ -1,11 +1,25 @@
 ```{r library}
 library(tidyverse)
 library(readxl)
+library(janitor)
 data <- read_excel("DataForTable2.1.xls")
 continent <- read.csv("countryContinent.csv")
 ```
 
 ```{r tidy data}
+data <- clean_names(data)
 
+data_2011 <- data %>%
+  clean_names() %>% 
+  select(country_name, year, life_ladder, social_support, healthy_life_expectancy_at_birth) %>%
+  filter(year == "2011")
+
+data_2021 <- data %>%
+  clean_names() %>% 
+  select(country_name, year, life_ladder, social_support, healthy_life_expectancy_at_birth) %>%
+  filter(year == "2021")
+  
+data_cleaned <- inner_join(data_2011, data_2021, by = "country_name") %>%
+  mutate(col_names = c("country_name", "year_2011", "life_ladder_2011", "social_support_2011", "life_expectancy_2011", "year_2021", "life_ladder_2021", "social_support_2021", "life_expectancy_2021"))
 
 ```
