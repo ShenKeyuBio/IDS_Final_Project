@@ -20,7 +20,7 @@ data_2021 <- data %>%
   filter(year == "2021")
   
 data_cleaned2 <- inner_join(data_2011, data_2021, by = "country_name") %>%
-  summarise(country_name = country_name, 
+  summarise(country = country_name, 
             year_2011 = year.x,
             lafe_ladder_2011 = life_ladder.x,
             social_support_2011 = social_support.x,
@@ -29,4 +29,11 @@ data_cleaned2 <- inner_join(data_2011, data_2021, by = "country_name") %>%
             life_ladder_2021 = life_ladder.y,
             social_support_2021 = social_support.y,
             life_expectancy_2021 = healthy_life_expectancy_at_birth.y)
+```
+
+```{r merge}
+continents <- continent %>%
+  select(country, continent)
+
+data_by_continent <- full_join(data_cleaned2, continents, by = "country")
 ```
