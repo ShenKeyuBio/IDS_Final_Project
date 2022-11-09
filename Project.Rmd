@@ -72,3 +72,11 @@ data_by_continent <- left_join(data_cleaned, continents, by = "country")
 ```{r Asia}
 
 ```
+
+```{r general 2021}
+
+```
+
+```{r general 2011}
+
+```
