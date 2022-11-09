@@ -1,0 +1,6 @@
+```{r library}
+library(tidyverse)
+library(readxl)
+data <- read_excel("DataForTable2.1.xls")
+continent <- read.csv("countryContinent.csv")
+```
