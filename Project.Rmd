@@ -4,3 +4,8 @@ library(readxl)
 data <- read_excel("DataForTable2.1.xls")
 continent <- read.csv("countryContinent.csv")
 ```
+
+```{r tidy data}
+
+
+```

@@ -1,0 +1,195 @@
+---
+title: "Group Research Proposal"
+subtitle: "World Happiness Report"
+author: "Aidan, Hrissy, Jack, Keyu"
+institute: "University of Edinburgh"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r load-packages, include = FALSE}
+# Add any additional packages you need to this chunk
+library(tidyverse)
+library(palmerpenguins)
+library(knitr)
+library(xaringanthemer)
+library(janitor)
+library(readxl)
+DataForTable2_1 <- read_excel("DataForTable2.1.xls") %>%
+clean_names()
+```
+
+```{r setup, include=FALSE}
+# For better figure resolution
+knitr::opts_chunk$set(fig.retina = 3, dpi = 300, fig.width = 6, fig.asp = 0.618, out.width = "80%")
+```
+
+```{r load-data, include=FALSE}
+# Load your data here
+```
+
+```{r include=FALSE}
+style_xaringan(
+  title_slide_background_image = "img/2x97kx7f.jpg"
+)
+```
+
+class: center, middle
+
+## What effect does Life Expectancy and Social Support have on Overall Happiness in the World?
+
+---
+
+class: inverse, center, middle
+
+# Introduction
+
+---
+
+# Data Set
+
+- Our data set is the World Happiness Report
+
+- From the World Happiness Report website (https://worldhappiness.report/ed/2022)
+
+- 12 variables and 2089 observations
+
+- Variables: Country Name, Year, Life Ladder, log GDP per capita, Social support, Healthy life expectancy at birth, Freedom to make life choices, Generosity, Perceptions of corruption, Positive affect, Negative affect, Confidence in national government
+
+---
+
+# Data Set
+
+```{r showing data set, echo = FALSE}
+
+glimpse(DataForTable2_1)
+
+```
+---
+
+class: inverse, center, middle
+
+# Data Analysis Plan
+
+---
+
+# Variables
+
+- Life Ladder quantified the level of happiness
+
+
+- The the effects of social_support  and healthy_life_expectancy_at_birth will be focused on.
+
+- The effects will also be compared between years and continents (Another dataset contains continents and countries will be joint to the main one). 
+
+---
+# Life Expectancy for 2021
+
+```{r life expectancy graph, echo = FALSE}
+DataForTable2_1 %>%
+  filter(
+    year == 2021,
+    healthy_life_expectancy_at_birth != "NA",
+    life_ladder != "NA"
+  ) %>%
+  ggplot(aes(x = healthy_life_expectancy_at_birth, y = life_ladder)) +
+  geom_point() +
+  labs(x = "Healthy Life Expectancy",
+       y = "Life Ladder") +
+  geom_smooth(
+    formula = y ~ x,
+    method = lm
+  ) +
+  ggpubr::stat_regline_equation(
+    formula = y ~ x,
+    show.legend = FALSE
+  )
+
+```
+---
+
+# Social Support for 2021
+
+```{r social support, echo = FALSE}
+DataForTable2_1 %>%
+  filter(
+    year == 2021,
+    social_support != "NA",
+    life_ladder != "NA"
+  ) %>%
+  ggplot(aes(x = social_support, y = life_ladder)) +
+  geom_point() +
+  labs(x = "Social Support",
+       y = "Life Ladder") +
+  geom_smooth(
+    formula = y ~ x,
+    method = lm
+  ) +
+  ggpubr::stat_regline_equation(
+    formula = y ~ x,
+    show.legend = FALSE
+  ) 
+
+```
+
+---
+
+# Summary Statistics
+
+```{r castle, echo = FALSE, out.width = "60%", fig.align = "center"}
+knitr::include_graphics("img/table.png")
+```
+
+
+---
+
+# Future Statistics
+
+```{echo = FALSE, include = FALSE}
+
+DataForTable2_1 %>%
+  select(country_name, year, life_ladder, healthy_life_expectancy_at_birth, social_support) %>%
+  filter(year == "2011" & healthy_life_expectancy_at_birth != "NA" & social_support != "NA") %>%
+  summarise(
+            min_happiness = min(life_ladder),
+            max_happiness = max(life_ladder),
+            avg_happiness = mean(life_ladder),
+            min_life_expectancy = min(healthy_life_expectancy_at_birth),
+            max_life_expectancy = max(healthy_life_expectancy_at_birth),
+            avg_life_expectancy = mean(healthy_life_expectancy_at_birth),
+            min_social_support = min(social_support),
+            max_social_support = max(social_support),
+            avg_social_support = mean(social_support))
+
+DataForTable2_1 %>%
+  select(country_name, year, life_ladder, healthy_life_expectancy_at_birth, social_support) %>%
+  filter(year == "2021" & healthy_life_expectancy_at_birth != "NA" & social_support != "NA") %>%
+  summarise(
+            min_happiness = min(life_ladder),
+            max_happiness = max(life_ladder),
+            avg_happiness = mean(life_ladder),
+            min_life_expectancy = min(healthy_life_expectancy_at_birth),
+            max_life_expectancy = max(healthy_life_expectancy_at_birth),
+            avg_life_expectancy = mean(healthy_life_expectancy_at_birth),
+            min_social_support = min(social_support),
+            max_social_support = max(social_support),
+            avg_social_support = mean(social_support))
+```
+
+Statistics and more that would be useful in answering our question:
+  - linear regression models
+  - correlation coefficient (r)
+  - coefficient of determination (R^2)
+
+Results that would support our hypothesized answer:
+  - high correlation coefficient
+  - high coefficient of determination to show our linear regressions are good models for          the data
+
