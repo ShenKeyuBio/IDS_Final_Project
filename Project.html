@@ -358,27 +358,9 @@ display: none;
 </div>
 
 
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>## ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.2 ──
-## ✔ ggplot2 3.3.6      ✔ purrr   0.3.4 
-## ✔ tibble  3.1.8      ✔ dplyr   1.0.10
-## ✔ tidyr   1.2.1      ✔ stringr 1.4.1 
-## ✔ readr   2.1.2      ✔ forcats 0.5.2 
-## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-## ✖ dplyr::filter() masks stats::filter()
-## ✖ dplyr::lag()    masks stats::lag()</code></pre>
-<pre class="r"><code>library(readxl)
-library(janitor)</code></pre>
-<pre><code>## 
-## Attaching package: &#39;janitor&#39;
-## 
-## The following objects are masked from &#39;package:stats&#39;:
-## 
-##     chisq.test, fisher.test</code></pre>
-<pre class="r"><code>data &lt;- read_excel(&quot;DataForTable2.1.xls&quot;)
-continent &lt;- read.csv(&quot;countryContinent.csv&quot;)</code></pre>
 <pre class="r"><code>data &lt;- clean_names(data)
 
+# filter the data of the countries with both 2011 and 2021
 data_2011 &lt;- data %&gt;%
   clean_names() %&gt;% 
   select(country_name, year, life_ladder, social_support, healthy_life_expectancy_at_birth) %&gt;%
@@ -389,20 +371,40 @@ data_2021 &lt;- data %&gt;%
   select(country_name, year, life_ladder, social_support, healthy_life_expectancy_at_birth) %&gt;%
   filter(year == &quot;2021&quot;)
   
-data_cleaned2 &lt;- inner_join(data_2011, data_2021, by = &quot;country_name&quot;) %&gt;%
+data_cleaned &lt;- inner_join(data_2011, data_2021, by = &quot;country_name&quot;) %&gt;%
   summarise(country = country_name, 
             year_2011 = year.x,
-            lafe_ladder_2011 = life_ladder.x,
+            life_ladder_2011 = life_ladder.x,
             social_support_2011 = social_support.x,
             life_expectancy_2011 = healthy_life_expectancy_at_birth.x,
             year_2021 = year.y,
             life_ladder_2021 = life_ladder.y,
             social_support_2021 = social_support.y,
-            life_expectancy_2021 = healthy_life_expectancy_at_birth.y)</code></pre>
-<pre class="r"><code>continents &lt;- continent %&gt;%
-  select(country, continent)
+            life_expectancy_2021 = healthy_life_expectancy_at_birth.y) %&gt;%
+  #filter the data without NAs in both the two variables
+  filter(!is.na(life_expectancy_2011))</code></pre>
+<pre class="r"><code># merge the data and change the country names to aviod NAs
+continents &lt;- continent %&gt;%
+  select(country, continent) %&gt;%
+  mutate(country = if_else(country == &quot;Bolivia (Plurinational State of)&quot;, &quot;Bolivia&quot;, country),
+         country = if_else(country == &quot;Congo&quot;, &quot;Congo (Brazzaville)&quot;, country),
+         country = if_else(country == &quot;Czech Republic&quot;, &quot;Czechia&quot;, country),
+         country = if_else(country == &quot;Iran (Islamic Republic of)&quot;, &quot;Iran&quot;, country),
+         country = if_else(country == &quot;Lao People&#39;s Democratic Republic&quot;, &quot;Laos&quot;, country),
+         country = if_else(country == &quot;Moldova (Republic of)&quot;, &quot;Moldova&quot;, country),
+         country = if_else(country == &quot;Macedonia (the former Yugoslav Republic of)&quot;, &quot;North Macedonia&quot;, country),
+         country = if_else(country == &quot;Russian Federation&quot;, &quot;Russia&quot;, country),
+         country = if_else(country == &quot;Korea (Republic of)&quot;, &quot;South Korea&quot;, country),
+         country = if_else(country == &quot;Tanzania, United Republic of&quot;, &quot;Tanzania&quot;, country),
+         country = if_else(country == &quot;United Kingdom of Great Britain and Northern Ireland&quot;, &quot;United Kingdom&quot;, country),
+          country = if_else(country == &quot;United States of America&quot;, &quot;United States&quot;, country),
+          country = if_else(country == &quot;Venezuela (Bolivarian Republic of)&quot;, &quot;Venezuela&quot;, country),
+          country = if_else(country == &quot;Viet Nam&quot;, &quot;Vietnam&quot;, country)
+        )
 
-data_by_continent &lt;- full_join(data_cleaned2, continents, by = &quot;country&quot;)</code></pre>
+data_by_continent &lt;- left_join(data_cleaned, continents, by = &quot;country&quot;)</code></pre>
+<pre class="r"><code>data_americas &lt;- data_by_continent %&gt;%
+  filter(continent == &quot;Americas&quot;)</code></pre>
 
 
 
