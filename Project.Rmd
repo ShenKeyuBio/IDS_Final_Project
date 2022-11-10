@@ -73,3 +73,11 @@ data_americas <- data_by_continent %>%
 ```{r Asia}
 
 ```
+
+```{r general 2021}
+
+```
+
+```{r general 2011}
+
+```
