@@ -70,6 +70,43 @@ data_by_continent <- left_join(data_cleaned, continents, by = "country")
 ```
 
 ```{r Asia}
+data_by_continent %>%
+  filter(
+    continent == "Asia"
+  ) %>%
+  ggplot(aes(x = life_expectancy_2021, y = life_ladder_2021)) +
+  geom_point() +
+  labs(x = "Healthy Life Expectancy",
+       y = "Life Ladder",
+       title = "Asia") +
+  geom_smooth(
+    formula = y ~ x,
+    method = lm
+  ) +
+  ggpubr::stat_regline_equation(
+    formula = y ~ x,
+    show.legend = FALSE
+  )
+# LL vs LE, slope = 0.13
+
+data_by_continent %>%
+  filter(
+    continent == "Asia"
+  ) %>%
+  ggplot(aes(x = social_support_2021, y = life_ladder_2021)) +
+  geom_point() +
+  labs(x = "Social Support",
+       y = "Life Ladder",
+       title = "Asia") +
+  geom_smooth(
+    formula = y ~ x,
+    method = lm
+  ) +
+  ggpubr::stat_regline_equation(
+    formula = y ~ x,
+    show.legend = FALSE
+  )
+# LL vs SS, slope = 8.3
 
 ```
 
