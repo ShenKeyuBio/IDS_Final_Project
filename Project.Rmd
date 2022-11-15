@@ -62,6 +62,14 @@ data_by_continent <- left_join(data_cleaned, continents, by = "country")
 ```{r America}
 data_americas <- data_by_continent %>%
   filter(continent == "Americas")
+
+linear_reg() %>%
+  set_engine("lm") %>%
+  fit(life_ladder_2011 ~ life_expectancy_2011, data = data_americas)
+
+linear_reg() %>%
+  set_engine("lm") %>%
+  fit(life_ladder_2021 ~ life_expectancy_2021, data = data_americas)
 ```
 
 ```{r EU}
