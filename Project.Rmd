@@ -77,7 +77,41 @@ linear_reg() %>%
 ```
 
 ```{r Africa}
+data_by_continent %>%
+  filter(continent == "Africa") %>%
+  ggplot(aes(x = life_expectancy_2011, y = life_ladder_2011)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
 
+africa_life_expec_fit_2011 <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(life_ladder_2011 ~ life_expectancy_2011, data = (filter(data_by_continent, continent == "Africa")))
+
+tidy(africa_life_expec_fit_2011)
+
+#life_ladder_2011-hat = 3.112 + 0.027*life_expectancy_2011
+
+glance(africa_life_expec_fit_2011)$r.squared
+
+#R2 = 0.06255119
+
+data_by_continent %>%
+  filter(continent == "Africa") %>%
+  ggplot(aes(x = life_expectancy_2021, y = life_ladder_2021)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
+
+africa_life_expec_fit_2021 <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(life_ladder_2021 ~ life_expectancy_2021, data = (filter(data_by_continent, continent == "Africa")))
+  
+tidy(africa_life_expec_fit_2021)
+
+#life_ladder_2021-hat = 1.332 + 0.054*life_expectancy_2021
+
+glance(africa_life_expec_fit_2021)$r.squared
+
+#R2 = 0.08868883
 ```
 
 ```{r Asia}
