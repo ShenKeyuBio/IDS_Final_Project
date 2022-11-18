@@ -60,11 +60,43 @@ data_by_continent <- left_join(data_cleaned, continents, by = "country")
 ```
 
 ```{r Americas}
+data_by_continent %>%
+ filter(continent == "Americas") %>%
+  ggplot(aes(x = life_expectancy_2021 + social_support_2021, y = life_ladder_2021)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) 
+  
+americas_fit_2021 <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(life_ladder_2021 ~ life_expectancy_2021 + social_support_2021, data = (filter(data_by_continent, continent == "Americas")))
 
+tidy(americas_fit_2021)
+
+#life_ladder_2021-hat = -0.38059960	 + 0.01617966*life_expectancy_2021 + 6.28850281*social_support
+
+glance(americas_fit_2021)$r.squared
+
+#r^2 = 0.4147077
 ```
 
 ```{r EU}
+data_by_continent %>%
+ filter(continent == "Europe") %>%
+  ggplot(aes(x = life_expectancy_2021, y = life_ladder_2021 + social_support_2021)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) 
+  
+europe_fit_2021 <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(life_ladder_2021 ~ life_expectancy_2021 + social_support_2021, data = (filter(data_by_continent, continent == "Europe")))
 
+tidy(europe_fit_2021)
+
+#life_ladder_2021-hat = -9.1438412	+ 0.1571482*life_expectancy_2021 + 5.2388023*social_support_2021
+
+glance(europe_fit_2021)$r.squared
+
+#r^2 = 0.6080303
 ```
 
 ```{r Africa}
