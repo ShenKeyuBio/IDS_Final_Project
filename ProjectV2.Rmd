@@ -58,3 +58,23 @@ continents <- continent %>%
 
 data_by_continent <- left_join(data_cleaned, continents, by = "country")
 ```
+
+```{r Americas}
+
+```
+
+```{r EU}
+
+```
+
+```{r Africa}
+
+```
+
+```{r Asia}
+
+```
+
+```{r 2021}
+
+```
