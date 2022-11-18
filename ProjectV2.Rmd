@@ -73,7 +73,7 @@ africa_fit_2021 <- linear_reg() %>%
   set_engine("lm") %>%
   fit(life_ladder_2021 ~ life_expectancy_2021 + social_support_2021, data = (filter(data_by_continent, continent == "Africa")))
 
-tidy(africa_life_expec_fit_2021)
+tidy(africa_fit_2021)
 
 ```
 
