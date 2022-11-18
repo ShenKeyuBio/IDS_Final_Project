@@ -1,0 +1,60 @@
+```{r library, include = FALSE}
+library(tidyverse)
+library(readxl)
+library(janitor)
+library(tidymodels)
+library(patchwork)
+data <- read_excel("DataForTable2.1.xls")
+continent <- read.csv("countryContinent.csv")
+```
+
+```{r tidy data}
+data <- clean_names(data)
+
+# filter the data of the countries with both 2011 and 2021
+data_2011 <- data %>%
+  clean_names() %>% 
+  select(country_name, year, life_ladder, social_support, healthy_life_expectancy_at_birth) %>%
+  filter(year == "2011")
+
+data_2021 <- data %>%
+  clean_names() %>% 
+  select(country_name, year, life_ladder, social_support, healthy_life_expectancy_at_birth) %>%
+  filter(year == "2021")
+  
+data_cleaned <- inner_join(data_2011, data_2021, by = "country_name") %>%
+  summarise(country = country_name, 
+            year_2011 = year.x,
+            life_ladder_2011 = life_ladder.x,
+            social_support_2011 = social_support.x,
+            life_expectancy_2011 = healthy_life_expectancy_at_birth.x,
+            year_2021 = year.y,
+            life_ladder_2021 = life_ladder.y,
+            social_support_2021 = social_support.y,
+            life_expectancy_2021 = healthy_life_expectancy_at_birth.y) %>%
+  #filter the data without NAs in both the two variables
+  filter(!is.na(life_expectancy_2011))
+```
+
+```{r merge}
+# merge the data and change the country names to aviod NAs
+continents <- continent %>%
+  select(country, continent) %>%
+  mutate(country = if_else(country == "Bolivia (Plurinational State of)", "Bolivia", country),
+         country = if_else(country == "Congo", "Congo (Brazzaville)", country),
+         country = if_else(country == "Czech Republic", "Czechia", country),
+         country = if_else(country == "Iran (Islamic Republic of)", "Iran", country),
+         country = if_else(country == "Lao People's Democratic Republic", "Laos", country),
+         country = if_else(country == "Moldova (Republic of)", "Moldova", country),
+         country = if_else(country == "Macedonia (the former Yugoslav Republic of)", "North Macedonia", country),
+         country = if_else(country == "Russian Federation", "Russia", country),
+         country = if_else(country == "Korea (Republic of)", "South Korea", country),
+         country = if_else(country == "Tanzania, United Republic of", "Tanzania", country),
+         country = if_else(country == "United Kingdom of Great Britain and Northern Ireland", "United Kingdom", country),
+          country = if_else(country == "United States of America", "United States", country),
+          country = if_else(country == "Venezuela (Bolivarian Republic of)", "Venezuela", country),
+          country = if_else(country == "Viet Nam", "Vietnam", country)
+        )
+
+data_by_continent <- left_join(data_cleaned, continents, by = "country")
+```
