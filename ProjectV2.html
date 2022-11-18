@@ -407,7 +407,6 @@ data_by_continent &lt;- left_join(data_cleaned, continents, by = &quot;country&q
 <pre class="r"><code>americas_fit_2021 &lt;- linear_reg() %&gt;%
   set_engine(&quot;lm&quot;) %&gt;%
   fit(life_ladder_2021 ~ life_expectancy_2021 + social_support_2021, data = (filter(data_by_continent, continent == &quot;Americas&quot;)))
-
 tidy(americas_fit_2021)</code></pre>
 <pre><code>## # A tibble: 3 × 5
 ##   term                 estimate std.error statistic p.value
@@ -416,7 +415,6 @@ tidy(americas_fit_2021)</code></pre>
 ## 2 life_expectancy_2021   0.0162    0.0429     0.377 0.711  
 ## 3 social_support_2021    6.29      2.03       3.10  0.00657</code></pre>
 <pre class="r"><code>#life_ladder_2021-hat = -0.38059960  + 0.01617966*life_expectancy_2021 + 6.28850281*social_support
-
 glance(americas_fit_2021)$r.squared</code></pre>
 <pre><code>## [1] 0.4147077</code></pre>
 <pre class="r"><code>#r^2 = 0.4147077</code></pre>
@@ -430,7 +428,6 @@ glance(americas_fit_2021)$r.squared</code></pre>
 <pre class="r"><code>europe_fit_2021 &lt;- linear_reg() %&gt;%
   set_engine(&quot;lm&quot;) %&gt;%
   fit(life_ladder_2021 ~ life_expectancy_2021 + social_support_2021, data = (filter(data_by_continent, continent == &quot;Europe&quot;)))
-
 tidy(europe_fit_2021)</code></pre>
 <pre><code>## # A tibble: 3 × 5
 ##   term                 estimate std.error statistic   p.value
@@ -439,10 +436,44 @@ tidy(europe_fit_2021)</code></pre>
 ## 2 life_expectancy_2021    0.157    0.0325      4.83 0.0000402
 ## 3 social_support_2021     5.24     1.42        3.68 0.000941</code></pre>
 <pre class="r"><code>#life_ladder_2021-hat = -9.1438412  + 0.1571482*life_expectancy_2021 + 5.2388023*social_support_2021
-
 glance(europe_fit_2021)$r.squared</code></pre>
 <pre><code>## [1] 0.6080303</code></pre>
 <pre class="r"><code>#r^2 = 0.6080303</code></pre>
+<pre class="r"><code>africa_fit_2021 &lt;- linear_reg() %&gt;%
+  set_engine(&quot;lm&quot;) %&gt;%
+  fit(life_ladder_2021 ~ life_expectancy_2021 + social_support_2021, data = (filter(data_by_continent, continent == &quot;Africa&quot;)))
+
+tidy(africa_fit_2021)</code></pre>
+<pre><code>## # A tibble: 3 × 5
+##   term                 estimate std.error statistic p.value
+##   &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;
+## 1 (Intercept)            1.06      2.09       0.508  0.616 
+## 2 life_expectancy_2021   0.0324    0.0378     0.857  0.401 
+## 3 social_support_2021    2.33      1.34       1.74   0.0966</code></pre>
+<pre class="r"><code>asia_fit_2021 &lt;- linear_reg() %&gt;%
+  set_engine(&quot;lm&quot;) %&gt;%
+  fit(life_ladder_2021 ~ life_expectancy_2021 + social_support_2021, data = (filter(data_by_continent, continent == &quot;Asia&quot;)))
+
+tidy(asia_fit_2021)</code></pre>
+<pre><code>## # A tibble: 3 × 5
+##   term                 estimate std.error statistic     p.value
+##   &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;       &lt;dbl&gt;
+## 1 (Intercept)           -2.00      1.62      -1.24  0.226      
+## 2 life_expectancy_2021   0.0165    0.0295     0.560 0.580      
+## 3 social_support_2021    7.93      1.13       7.02  0.000000124</code></pre>
+<pre class="r"><code>fit_2021 &lt;- linear_reg() %&gt;%
+  set_engine(&quot;lm&quot;) %&gt;%
+  fit(life_ladder_2021 ~ life_expectancy_2021 + social_support_2021, data = data_by_continent)
+
+tidy(fit_2021)</code></pre>
+<pre><code>## # A tibble: 3 × 5
+##   term                 estimate std.error statistic  p.value
+##   &lt;chr&gt;                   &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+## 1 (Intercept)           -2.45      0.744      -3.29 1.34e- 3
+## 2 life_expectancy_2021   0.0517    0.0156      3.32 1.25e- 3
+## 3 social_support_2021    5.82      0.666       8.74 3.73e-14</code></pre>
+<pre class="r"><code>glance(fit_2021)$r.squared</code></pre>
+<pre><code>## [1] 0.7111844</code></pre>
 
 
 
