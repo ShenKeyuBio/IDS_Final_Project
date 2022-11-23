@@ -133,4 +133,17 @@ data_2011 %>%
   ggplot(mapping = aes(x = gdp_2011, y = life_ladder, color = continent))+
   geom_point()+
   geom_smooth(method = lm, se = FALSE)
+
+data_2011 %>%
+  filter(continent != "Oceania") %>%
+  ggplot(mapping = aes(x = social_support, y = life_ladder, color = continent))+
+  geom_point()+
+  geom_smooth(method = lm, se = FALSE)
+
+data_2011 %>%
+  filter(continent != "Oceania") %>%
+  ggplot(mapping = aes(x = life_expectancy, y = life_ladder, color = continent))+
+  geom_point()+
+  geom_smooth(method = lm, se = FALSE)
+```
 ```
