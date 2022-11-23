@@ -163,8 +163,7 @@ mod_2011 <- linear_reg() %>%
   set_engine("lm") 
 
 recipe_2011 <- recipe(life_ladder ~ ., data = train_2011) %>%
-  update_role(country, new_role = "ID") %>%
-  step_rm(year, continent) %>%
+  step_rm(year, country) %>%
   step_dummy(all_nominal(), -all_outcomes())
 ```
 
