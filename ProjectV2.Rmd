@@ -130,7 +130,7 @@ glance(fit_2011)$r.squared
 ```{r plot slopes}
 data_2011 %>%
   filter(continent != "Oceania") %>%
-  ggplot(mapping = aes(x = life_ladder, y = gdp_2011, color = continent))+
+  ggplot(mapping = aes(x = gdp_2011, y = life_ladder, color = continent))+
   geom_point()+
   geom_smooth(method = lm, se = FALSE)
 ```
