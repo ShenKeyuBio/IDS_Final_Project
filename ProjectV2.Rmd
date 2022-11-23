@@ -57,7 +57,21 @@ data_by_continent <- left_join(data, continents, by = "country")
  data_gdp1 <- data_gdp %>%
   clean_names() %>%
   summarise(country = country_name,
-            gdp_2011 = x2011)
+            gdp_2011 = x2011) %>%
+    mutate(country = if_else(country == "Congo, Dem. Rep.", "Congo (Kinshasa)", country),
+         country = if_else(country == "Congo, Rep.", "Congo (Brazzaville)", country),
+         country = if_else(country == "Egypt, Arab Rep.", "Egypt", country),
+         country = if_else(country == "Iran, Islamic Rep.", "Iran", country),
+         country = if_else(country == "Kyrgyz Republic", "Kyrgyzstan", country),
+         country = if_else(country == "Lao PDR", "Laos", country),
+         country = if_else(country == "Slovak Republic", "Slovakia", country),
+         country = if_else(country == "Russian Federation", "Russia", country),
+         country = if_else(country == "Korea, Rep.", "South Korea", country),
+         country = if_else(country == "Syrian Arab Republic", "Syria", country),
+         country = if_else(country == "Turkiye", "Turkey", country),
+         country = if_else(country == "Venezuela, RB", "Venezuela", country),
+         country = if_else(country == "Yemen, Rep.", "Yemen", country)
+    )
 
 data_2011 <- left_join(data_by_continent, data_gdp1, by = "country")
 
