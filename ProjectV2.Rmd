@@ -183,8 +183,12 @@ tidy(fit_2011) %>%
 
 ```{r predict}
 predict_test_2011 <- predict(fit_2011, test_2011) %>%
-  bind_cols(test_2011 %>% select(life_ladder, country))
+  bind_cols(test_2011 %>% select(life_ladder, country, continent))
 
 predict_test_2011
+
+rsq(predict_test_2011, truth = life_ladder, estimate = .pred)
+
+rmse(predict_test_2011, truth = life_ladder, estimate = .pred)
 
 ```
