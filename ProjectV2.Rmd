@@ -181,3 +181,11 @@ fit_2011 <- workflow_2011 %>%
 tidy(fit_2011) %>%
   print(n=4)
 ```
+
+```{r predict}
+predict_test_2011 <- predict(fit_2011, test_2011) %>%
+  bind_cols(test_2011 %>% select(life_ladder, country))
+
+predict_test_2011
+
+```
