@@ -1,0 +1,117 @@
+```{r library, include = FALSE}
+library(tidyverse)
+library(readxl)
+library(janitor)
+library(tidymodels)
+library(patchwork)
+data <- read_excel("DataForTable2.1.xls")
+continent <- read.csv("countryContinent.csv")
+data_gdp <- read_excel("API_NY.GDP.PCAP.CD_DS2_en_csv_v2_4701206.xlsx", 
+          skip = 4)
+```
+
+```{r tidy data}
+data <- clean_names(data)
+
+# filter the data of the countries with  2011 
+data_2020 <- data %>%
+  clean_names() %>% 
+  select(country_name, year, life_ladder, social_support, healthy_life_expectancy_at_birth) %>%
+  filter(year == "2020") %>%
+  filter(!is.na(social_support)) %>%
+  filter(!is.na(healthy_life_expectancy_at_birth)) %>%
+  summarise(country = country_name, 
+            year = year,
+            life_ladder = life_ladder,
+            life_expectancy = healthy_life_expectancy_at_birth,
+            social_support = social_support)
+```
+
+```{r merge}
+# merge the data and change the country names to avoid NAs
+continents <- continent %>%
+  select(country, continent) %>%
+  mutate(country = if_else(country == "Bolivia (Plurinational State of)", "Bolivia", country),
+         country = if_else(country == "Congo", "Congo (Brazzaville)", country),
+         country = if_else(country == "Czech Republic", "Czechia", country),
+         country = if_else(country == "Iran (Islamic Republic of)", "Iran", country),
+         country = if_else(country == "Lao People's Democratic Republic", "Laos", country),
+         country = if_else(country == "Moldova (Republic of)", "Moldova", country),
+         country = if_else(country == "Macedonia (the former Yugoslav Republic of)", "North Macedonia", country),
+         country = if_else(country == "Russian Federation", "Russia", country),
+         country = if_else(country == "Korea (Republic of)", "South Korea", country),
+         country = if_else(country == "Tanzania, United Republic of", "Tanzania", country),
+         country = if_else(country == "United Kingdom of Great Britain and Northern Ireland", "United Kingdom", country),
+          country = if_else(country == "United States of America", "United States", country),
+          country = if_else(country == "Venezuela (Bolivarian Republic of)", "Venezuela", country),
+          country = if_else(country == "Viet Nam", "Vietnam", country),
+          country = if_else(country == "Congo (Democratic Republic of the)", "Congo (Kinshasa)", country),
+          country = if_else(country == "Swaziland", "Eswatini", country),
+          country = if_else(country == "Syrian Arab Republic", "Syria", country))
+
+data_2020 <- left_join(data_2020, continents, by = "country")
+```
+
+```{r gdp}
+ data_gdp1 <- data_gdp %>%
+  clean_names() %>%
+  summarise(country = country_name,
+            gdp_2020 = x2020) %>%
+    mutate(country = if_else(country == "Congo, Dem. Rep.", "Congo (Kinshasa)", country),
+         country = if_else(country == "Congo, Rep.", "Congo (Brazzaville)", country),
+         country = if_else(country == "Egypt, Arab Rep.", "Egypt", country),
+         country = if_else(country == "Iran, Islamic Rep.", "Iran", country),
+         country = if_else(country == "Kyrgyz Republic", "Kyrgyzstan", country),
+         country = if_else(country == "Lao PDR", "Laos", country),
+         country = if_else(country == "Slovak Republic", "Slovakia", country),
+         country = if_else(country == "Russian Federation", "Russia", country),
+         country = if_else(country == "Korea, Rep.", "South Korea", country),
+         country = if_else(country == "Syrian Arab Republic", "Syria", country),
+         country = if_else(country == "Turkiye", "Turkey", country),
+         country = if_else(country == "Venezuela, RB", "Venezuela", country),
+         country = if_else(country == "Yemen, Rep.", "Yemen", country)
+    )
+
+data_2020 <- left_join(data_2020, data_gdp1, by = "country")
+
+```
+
+```{r Americas}
+americas_fit <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(life_ladder ~ life_expectancy + social_support + gdp_2020, data = (filter(data_2020, continent == "Americas")))
+tidy(americas_fit)
+#life_ladder-hat = -0.38059960	 + 0.01617966*life_expectancy + 6.28850281*social_support
+glance(americas_fit)$r.squared
+#r^2 = 0.4147077
+```
+
+```{r EU}
+europe_fit <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(life_ladder ~ life_expectancy + social_support + gdp_2020, data = (filter(data_2020, continent == "Europe")))
+tidy(europe_fit)
+#life_ladder-hat = -9.1438412	+ 0.1571482*life_expectancy + 5.2388023*social_support
+glance(europe_fit)$r.squared
+#r^2 = 0.6080303
+```
+
+```{r Africa}
+africa_fit <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(life_ladder ~ life_expectancy + social_support + gdp_2020, data = (filter(data_2020, continent == "Africa")))
+
+tidy(africa_fit)
+glance(africa_fit)$r.squared
+# r square = 0.38
+```
+
+```{r Asia}
+asia_fit <- linear_reg() %>%
+  set_engine("lm") %>%
+  fit(life_ladder ~ life_expectancy + social_support + gdp_2020, data = (filter(data_2020, continent == "Asia")))
+
+tidy(asia_fit)
+glance(asia_fit)$r.squared
+# r square = 0.52
+```
