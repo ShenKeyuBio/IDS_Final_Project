@@ -1,3 +1,15 @@
+```{r library, include = FALSE}
+library(tidyverse)
+library(readxl)
+library(janitor)
+library(tidymodels)
+library(patchwork)
+data <- read_excel("DataForTable2.1.xls")
+continent <- read.csv("countryContinent.csv")
+data_gdp <- read_excel("API_NY.GDP.PCAP.CD_DS2_en_csv_v2_4701206.xlsx", 
+          skip = 4)
+```
+
 ```{r tidy data}
 data <- clean_names(data)
 
