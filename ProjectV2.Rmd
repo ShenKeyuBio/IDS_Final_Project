@@ -1,3 +1,4 @@
+
 ```{r library, include = FALSE}
 library(tidyverse)
 library(readxl)
@@ -11,8 +12,8 @@ continent <- read.csv("countryContinent.csv")
 ```{r tidy data}
 data <- clean_names(data)
 
-# filter the data of the countries with both 2011 and 2021
-data_2011 <- data %>%
+# filter the data of the countries with  2011 
+data <- data %>%
   clean_names() %>% 
   select(country_name, year, life_ladder, social_support, healthy_life_expectancy_at_birth) %>%
   filter(year == "2011") %>%
@@ -22,13 +23,11 @@ data_2011 <- data %>%
             year = year,
             life_ladder = life_ladder,
             life_expectancy = healthy_life_expectancy_at_birth,
-            social_support = social_support
-            )
-
+            social_support = social_support)
 ```
 
 ```{r merge}
-# merge the data and change the country names to aviod NAs
+# merge the data and change the country names to avoid NAs
 continents <- continent %>%
   select(country, continent) %>%
   mutate(country = if_else(country == "Bolivia (Plurinational State of)", "Bolivia", country),
@@ -47,70 +46,53 @@ continents <- continent %>%
           country = if_else(country == "Viet Nam", "Vietnam", country),
           country = if_else(country == "Congo (Democratic Republic of the)", "Congo (Kinshasa)", country),
           country = if_else(country == "Swaziland", "Eswatini", country),
-          country = if_else(country == "Syrian Arab Republic", "Syria", country)
-        )
+          country = if_else(country == "Syrian Arab Republic", "Syria", country))
 
-data_by_continent <- left_join(data_2011, continents, by = "country")
+data_by_continent <- left_join(data, continents, by = "country")
 ```
 
 ```{r Americas}
-data_by_continent %>%
- filter(continent == "Americas") %>%
-  ggplot(aes(x = life_expectancy_2021 + social_support_2021, y = life_ladder_2021)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE) 
-  
-americas_fit_2021 <- linear_reg() %>%
+americas_fit <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(life_ladder_2021 ~ life_expectancy_2021 + social_support_2021, data = (filter(data_by_continent, continent == "Americas")))
-tidy(americas_fit_2021)
-#life_ladder_2021-hat = -0.38059960	 + 0.01617966*life_expectancy_2021 + 6.28850281*social_support
-glance(americas_fit_2021)$r.squared
+  fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_by_continent, continent == "Americas")))
+tidy(americas_fit)
+#life_ladder-hat = -0.38059960	 + 0.01617966*life_expectancy + 6.28850281*social_support
+glance(americas_fit)$r.squared
 #r^2 = 0.4147077
 ```
 
 ```{r EU}
-data_by_continent %>%
- filter(continent == "Europe") %>%
-  ggplot(aes(x = life_expectancy_2021, y = life_ladder_2021 + social_support_2021)) +
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE) 
-  
-europe_fit_2021 <- linear_reg() %>%
+europe_fit <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(life_ladder_2021 ~ life_expectancy_2021 + social_support_2021, data = (filter(data_by_continent, continent == "Europe")))
-tidy(europe_fit_2021)
-#life_ladder_2021-hat = -9.1438412	+ 0.1571482*life_expectancy_2021 + 5.2388023*social_support_2021
-glance(europe_fit_2021)$r.squared
+  fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_by_continent, continent == "Europe")))
+tidy(europe_fit)
+#life_ladder-hat = -9.1438412	+ 0.1571482*life_expectancy + 5.2388023*social_support
+glance(europe_fit)$r.squared
 #r^2 = 0.6080303
 ```
 
 ```{r Africa}
-
-africa_fit_2021 <- linear_reg() %>%
+africa_fit <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(life_ladder_2021 ~ life_expectancy_2021 + social_support_2021, data = (filter(data_by_continent, continent == "Africa")))
+  fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_by_continent, continent == "Africa")))
 
-tidy(africa_fit_2021)
-
+tidy(africa_fit)
 ```
 
 ```{r Asia}
-
-asia_fit_2021 <- linear_reg() %>%
+asia_fit <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(life_ladder_2021 ~ life_expectancy_2021 + social_support_2021, data = (filter(data_by_continent, continent == "Asia")))
+  fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_by_continent, continent == "Asia")))
 
-tidy(asia_fit_2021)
+tidy(asia_fit)
 ```
 
 ```{r 2021}
-
-fit_2021 <- linear_reg() %>%
+fit_2011 <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(life_ladder_2021 ~ life_expectancy_2021 + social_support_2021, data = data_by_continent)
+  fit(life_ladder ~ life_expectancy + social_support, data = data_by_continent)
 
-tidy(fit_2021)
+tidy(fit_2011)
 
-glance(fit_2021)$r.squared
+glance(fit_2011)$r.squared
 ```
