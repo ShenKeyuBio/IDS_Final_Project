@@ -17,23 +17,6 @@ data_2011 <- data %>%
   select(country_name, year, life_ladder, social_support, healthy_life_expectancy_at_birth) %>%
   filter(year == "2011")
 
-data_2021 <- data %>%
-  clean_names() %>% 
-  select(country_name, year, life_ladder, social_support, healthy_life_expectancy_at_birth) %>%
-  filter(year == "2021")
-  
-data_cleaned <- inner_join(data_2011, data_2021, by = "country_name") %>%
-  summarise(country = country_name, 
-            year_2011 = year.x,
-            life_ladder_2011 = life_ladder.x,
-            social_support_2011 = social_support.x,
-            life_expectancy_2011 = healthy_life_expectancy_at_birth.x,
-            year_2021 = year.y,
-            life_ladder_2021 = life_ladder.y,
-            social_support_2021 = social_support.y,
-            life_expectancy_2021 = healthy_life_expectancy_at_birth.y) %>%
-  #filter the data without NAs in both the two variables
-  filter(!is.na(life_expectancy_2011))
 ```
 
 ```{r merge}
