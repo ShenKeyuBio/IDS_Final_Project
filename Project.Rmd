@@ -1,3 +1,4 @@
+
 ```{r library, include = FALSE}
 library(tidyverse)
 library(readxl)
@@ -220,6 +221,7 @@ life_fit <- linear_reg() %>%
   fit(life_ladder_2021 ~ life_expectancy_2021 + continent, data = data_by_continent)
 tidy(life_fit)
 ```
+
 ```{r means}
 mean_var_asia <- data_by_continent %>%
   filter(continent == "Asia")%>%
