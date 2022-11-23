@@ -7,6 +7,8 @@ library(tidymodels)
 library(patchwork)
 data <- read_excel("DataForTable2.1.xls")
 continent <- read.csv("countryContinent.csv")
+data_gdp <- read_excel("API_NY.GDP.PCAP.CD_DS2_en_csv_v2_4701206.xlsx", 
+          skip = 4)
 ```
 
 ```{r tidy data}
@@ -49,6 +51,16 @@ continents <- continent %>%
           country = if_else(country == "Syrian Arab Republic", "Syria", country))
 
 data_by_continent <- left_join(data, continents, by = "country")
+```
+
+```{r gdp}
+ data_gdp1 <- data_gdp %>%
+  clean_names() %>%
+  summarise(country = country_name,
+            gdp_2011 = x2011)
+
+data_2011 <- left_join(data_by_continent, data_gdp1, by = "country")
+
 ```
 
 ```{r Americas}
