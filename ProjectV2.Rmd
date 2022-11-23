@@ -120,7 +120,7 @@ glance(asia_fit)$r.squared
 ```{r 2011}
 fit_2011 <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(life_ladder ~ life_expectancy + social_support, data = data_2011)
+  fit(life_ladder ~ life_expectancy + social_support + gdp_2011, data = data_2011)
 
 tidy(fit_2011)
 
