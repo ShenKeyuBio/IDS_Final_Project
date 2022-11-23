@@ -146,4 +146,38 @@ data_2011 %>%
   geom_point()+
   geom_smooth(method = lm, se = FALSE)
 ```
+
+```{r split}
+set.seed(2578)
+split_2011 <- initial_split(data_2011)
+
+train_2011 <- training(split_2011)
+dim(train_2011)
+
+test_2011 <- testing(split_2011)
+dim(test_2011)
+```
+
+```{r recipe}
+mod_2011 <- linear_reg() %>%
+  set_engine("lm") 
+
+recipe_2011 <- recipe(life_ladder ~ ., data = train_2011) %>%
+  update_role(country, new_role = "ID") %>%
+  step_rm(year, continent) %>%
+  step_dummy(all_nominal(), -all_outcomes())
+```
+
+```{r workflow}
+workflow_2011 <- workflow() %>%
+  add_model(mod_2011) %>%
+  add_recipe(recipe_2011)
+```
+
+```{r fit}
+fit_2011 <- workflow_2011 %>%
+  fit(data = train_2011)
+
+tidy(fit_2011) %>%
+  print(n=4)
 ```
