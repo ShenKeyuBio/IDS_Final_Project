@@ -388,9 +388,29 @@ continents &lt;- continent %&gt;%
           country = if_else(country == &quot;Syrian Arab Republic&quot;, &quot;Syria&quot;, country))
 
 data_by_continent &lt;- left_join(data, continents, by = &quot;country&quot;)</code></pre>
+<pre class="r"><code> data_gdp1 &lt;- data_gdp %&gt;%
+  clean_names() %&gt;%
+  summarise(country = country_name,
+            gdp_2011 = x2011) %&gt;%
+    mutate(country = if_else(country == &quot;Congo, Dem. Rep.&quot;, &quot;Congo (Kinshasa)&quot;, country),
+         country = if_else(country == &quot;Congo, Rep.&quot;, &quot;Congo (Brazzaville)&quot;, country),
+         country = if_else(country == &quot;Egypt, Arab Rep.&quot;, &quot;Egypt&quot;, country),
+         country = if_else(country == &quot;Iran, Islamic Rep.&quot;, &quot;Iran&quot;, country),
+         country = if_else(country == &quot;Kyrgyz Republic&quot;, &quot;Kyrgyzstan&quot;, country),
+         country = if_else(country == &quot;Lao PDR&quot;, &quot;Laos&quot;, country),
+         country = if_else(country == &quot;Slovak Republic&quot;, &quot;Slovakia&quot;, country),
+         country = if_else(country == &quot;Russian Federation&quot;, &quot;Russia&quot;, country),
+         country = if_else(country == &quot;Korea, Rep.&quot;, &quot;South Korea&quot;, country),
+         country = if_else(country == &quot;Syrian Arab Republic&quot;, &quot;Syria&quot;, country),
+         country = if_else(country == &quot;Turkiye&quot;, &quot;Turkey&quot;, country),
+         country = if_else(country == &quot;Venezuela, RB&quot;, &quot;Venezuela&quot;, country),
+         country = if_else(country == &quot;Yemen, Rep.&quot;, &quot;Yemen&quot;, country)
+    )
+
+data_2011 &lt;- left_join(data_by_continent, data_gdp1, by = &quot;country&quot;)</code></pre>
 <pre class="r"><code>americas_fit &lt;- linear_reg() %&gt;%
   set_engine(&quot;lm&quot;) %&gt;%
-  fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_by_continent, continent == &quot;Americas&quot;)))
+  fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_2011, continent == &quot;Americas&quot;)))
 tidy(americas_fit)</code></pre>
 <pre><code>## # A tibble: 3 × 5
 ##   term            estimate std.error statistic p.value
@@ -404,7 +424,7 @@ glance(americas_fit)$r.squared</code></pre>
 <pre class="r"><code>#r^2 = 0.4147077</code></pre>
 <pre class="r"><code>europe_fit &lt;- linear_reg() %&gt;%
   set_engine(&quot;lm&quot;) %&gt;%
-  fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_by_continent, continent == &quot;Europe&quot;)))
+  fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_2011, continent == &quot;Europe&quot;)))
 tidy(europe_fit)</code></pre>
 <pre><code>## # A tibble: 3 × 5
 ##   term            estimate std.error statistic   p.value
@@ -418,7 +438,7 @@ glance(europe_fit)$r.squared</code></pre>
 <pre class="r"><code>#r^2 = 0.6080303</code></pre>
 <pre class="r"><code>africa_fit &lt;- linear_reg() %&gt;%
   set_engine(&quot;lm&quot;) %&gt;%
-  fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_by_continent, continent == &quot;Africa&quot;)))
+  fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_2011, continent == &quot;Africa&quot;)))
 
 tidy(africa_fit)</code></pre>
 <pre><code>## # A tibble: 3 × 5
@@ -427,9 +447,12 @@ tidy(africa_fit)</code></pre>
 ## 1 (Intercept)       2.08      0.787      2.64  0.0123   
 ## 2 life_expectancy   0.0114    0.0131     0.866 0.392    
 ## 3 social_support    2.49      0.535      4.65  0.0000438</code></pre>
+<pre class="r"><code>glance(africa_fit)$r.squared</code></pre>
+<pre><code>## [1] 0.3873436</code></pre>
+<pre class="r"><code># r square = 0.38</code></pre>
 <pre class="r"><code>asia_fit &lt;- linear_reg() %&gt;%
   set_engine(&quot;lm&quot;) %&gt;%
-  fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_by_continent, continent == &quot;Asia&quot;)))
+  fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_2011, continent == &quot;Asia&quot;)))
 
 tidy(asia_fit)</code></pre>
 <pre><code>## # A tibble: 3 × 5
@@ -438,9 +461,12 @@ tidy(asia_fit)</code></pre>
 ## 1 (Intercept)      -3.17      1.54       -2.06 0.0461 
 ## 2 life_expectancy   0.0978    0.0275      3.55 0.00106
 ## 3 social_support    2.91      0.992       2.94 0.00566</code></pre>
+<pre class="r"><code>glance(asia_fit)$r.squared</code></pre>
+<pre><code>## [1] 0.5261609</code></pre>
+<pre class="r"><code># r square = 0.52</code></pre>
 <pre class="r"><code>fit_2011 &lt;- linear_reg() %&gt;%
   set_engine(&quot;lm&quot;) %&gt;%
-  fit(life_ladder ~ life_expectancy + social_support, data = data_by_continent)
+  fit(life_ladder ~ life_expectancy + social_support, data = data_2011)
 
 tidy(fit_2011)</code></pre>
 <pre><code>## # A tibble: 3 × 5

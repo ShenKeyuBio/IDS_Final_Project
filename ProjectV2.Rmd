@@ -80,7 +80,7 @@ data_2011 <- left_join(data_by_continent, data_gdp1, by = "country")
 ```{r Americas}
 americas_fit <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_by_continent, continent == "Americas")))
+  fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_2011, continent == "Americas")))
 tidy(americas_fit)
 #life_ladder-hat = -0.38059960	 + 0.01617966*life_expectancy + 6.28850281*social_support
 glance(americas_fit)$r.squared
@@ -90,7 +90,7 @@ glance(americas_fit)$r.squared
 ```{r EU}
 europe_fit <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_by_continent, continent == "Europe")))
+  fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_2011, continent == "Europe")))
 tidy(europe_fit)
 #life_ladder-hat = -9.1438412	+ 0.1571482*life_expectancy + 5.2388023*social_support
 glance(europe_fit)$r.squared
@@ -100,7 +100,7 @@ glance(europe_fit)$r.squared
 ```{r Africa}
 africa_fit <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_by_continent, continent == "Africa")))
+  fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_2011, continent == "Africa")))
 
 tidy(africa_fit)
 glance(africa_fit)$r.squared
@@ -110,19 +110,23 @@ glance(africa_fit)$r.squared
 ```{r Asia}
 asia_fit <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_by_continent, continent == "Asia")))
+  fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_2011, continent == "Asia")))
 
 tidy(asia_fit)
 glance(asia_fit)$r.squared
 # r square = 0.52
 ```
 
-```{r 2021}
+```{r 2011}
 fit_2011 <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(life_ladder ~ life_expectancy + social_support, data = data_by_continent)
+  fit(life_ladder ~ life_expectancy + social_support, data = data_2011)
 
 tidy(fit_2011)
 
 glance(fit_2011)$r.squared
+```
+
+```{r}
+
 ```
