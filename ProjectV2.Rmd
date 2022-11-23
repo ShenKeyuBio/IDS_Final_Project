@@ -77,6 +77,8 @@ africa_fit <- linear_reg() %>%
   fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_by_continent, continent == "Africa")))
 
 tidy(africa_fit)
+glance(africa_fit)$r.squared
+# r square = 0.38
 ```
 
 ```{r Asia}
@@ -85,6 +87,8 @@ asia_fit <- linear_reg() %>%
   fit(life_ladder ~ life_expectancy + social_support, data = (filter(data_by_continent, continent == "Asia")))
 
 tidy(asia_fit)
+glance(asia_fit)$r.squared
+# r square = 0.52
 ```
 
 ```{r 2021}
