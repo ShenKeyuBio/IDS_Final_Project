@@ -145,6 +145,9 @@ data_2011 %>%
   ggplot(mapping = aes(x = life_expectancy, y = life_ladder, color = continent))+
   geom_point()+
   geom_smooth(method = lm, se = FALSE)
+
+ggplot(data_2011, aes(x = life_ladder))+
+  geom_histogram(binwidth = 0.5)
 ```
 
 ```{r split}
