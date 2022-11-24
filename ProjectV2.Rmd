@@ -194,4 +194,16 @@ rsq(predict_test_2011, truth = life_ladder, estimate = .pred)
 
 rmse(predict_test_2011, truth = life_ladder, estimate = .pred)
 
+train_2011 %>%
+  summarise(min = min(life_ladder), max = max(life_ladder))
+
+```
+
+```{r v validation}
+set.seed(345)
+
+folds <- vfold_cv(train_2011, v = 5)
+fit_2011_fold <- workflow_2011 %>%
+  fit_resamples(folds)
+collect_metrics(fit_2011_fold)
 ```
