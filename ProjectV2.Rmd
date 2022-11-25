@@ -75,12 +75,17 @@ data_by_continent <- left_join(data, continents, by = "country")
 
 data_2011 <- left_join(data_by_continent, data_gdp1, by = "country")
 
+test_data <- data_2011 %>%
+  mutate(life_expectancy_std = scale(life_expectancy),
+         social_support_std = scale(social_support),
+         gdp_2011_std = scale(gdp_2011)) %>%
+  clean_names()
 ```
 
 ```{r Americas}
 americas_fit <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(life_ladder ~ life_expectancy + social_support + gdp_2011, data = (filter(data_2011, continent == "Americas")))
+  fit(life_ladder ~ life_expectancy_std + social_support_std + gdp_2011_std, data = (filter(test_data, continent == "Americas")))
 tidy(americas_fit)
 #life_ladder-hat = -0.38059960	 + 0.01617966*life_expectancy + 6.28850281*social_support
 glance(americas_fit)$r.squared
@@ -90,7 +95,7 @@ glance(americas_fit)$r.squared
 ```{r EU}
 europe_fit <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(life_ladder ~ life_expectancy + social_support + gdp_2011, data = (filter(data_2011, continent == "Europe")))
+  fit(life_ladder ~ life_expectancy_std + social_support_std + gdp_2011_std, data = (filter(test_data, continent == "Europe")))
 tidy(europe_fit)
 #life_ladder-hat = -9.1438412	+ 0.1571482*life_expectancy + 5.2388023*social_support
 glance(europe_fit)$r.squared
@@ -100,7 +105,7 @@ glance(europe_fit)$r.squared
 ```{r Africa}
 africa_fit <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(life_ladder ~ life_expectancy + social_support + gdp_2011, data = (filter(data_2011, continent == "Africa")))
+  fit(life_ladder ~ life_expectancy_std + social_support_std + gdp_2011_std, data = (filter(test_data, continent == "Africa")))
 
 tidy(africa_fit)
 glance(africa_fit)$r.squared
@@ -110,7 +115,7 @@ glance(africa_fit)$r.squared
 ```{r Asia}
 asia_fit <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(life_ladder ~ life_expectancy + social_support + gdp_2011, data = (filter(data_2011, continent == "Asia")))
+  fit(life_ladder ~ life_expectancy_std + social_support_std + gdp_2011_std, data = (filter(test_data, continent == "Asia")))
 
 tidy(asia_fit)
 glance(asia_fit)$r.squared
