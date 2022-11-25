@@ -41,6 +41,48 @@ africa_slope <- slopes %>%
   filter(continent == "Africa")
 ```
 
+```{r compare variables within continent}
+asia_slope %>%
+  pivot_longer(
+  cols = c(life_expectancy, social_support, gdp), 
+  names_to = "variable", 
+  values_to = "coefficient"
+  ) %>%
+  ggplot(mapping = aes(x = coefficient, color = variable))+
+  geom_boxplot()+
+  labs(title = "Asia")
+
+americas_slope %>%
+  pivot_longer(
+  cols = c(life_expectancy, social_support, gdp), 
+  names_to = "variable", 
+  values_to = "coefficient"
+  ) %>%
+  ggplot(mapping = aes(x = coefficient, color = variable))+
+  geom_boxplot()+
+  labs(title = "America")
+
+europe_slope %>%
+  pivot_longer(
+  cols = c(life_expectancy, social_support, gdp), 
+  names_to = "variable", 
+  values_to = "coefficient"
+  ) %>%
+  ggplot(mapping = aes(x = coefficient, color = variable))+
+  geom_boxplot()+
+  labs(title = "Europe")
+
+africa_slope %>%
+  pivot_longer(
+  cols = c(life_expectancy, social_support, gdp), 
+  names_to = "variable", 
+  values_to = "coefficient"
+  ) %>%
+  ggplot(mapping = aes(x = coefficient, color = variable))+
+  geom_boxplot()+
+  labs(title = "Africa")
+```
+
 ```{r t-test}
 #p=0.007715 SIG
 t.test(asia_slope$life_expectancy, 

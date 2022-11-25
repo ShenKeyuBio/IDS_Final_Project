@@ -14,7 +14,7 @@ data_gdp <- read_excel("API_NY.GDP.PCAP.CD_DS2_en_csv_v2_4701206.xlsx",
 data <- clean_names(data)
 
 # filter the data of the countries with  2011 
-data_2021 <- data %>%
+data <- data %>%
   clean_names() %>% 
   select(country_name, year, life_ladder, social_support, healthy_life_expectancy_at_birth) %>%
   filter(year == "2021") %>%
@@ -49,7 +49,7 @@ continents <- continent %>%
           country = if_else(country == "Swaziland", "Eswatini", country),
           country = if_else(country == "Syrian Arab Republic", "Syria", country))
 
-data_2021 <- left_join(data_2021, continents, by = "country")
+data_by_continent <- left_join(data, continents, by = "country")
 ```
 
 ```{r gdp}
@@ -72,14 +72,19 @@ data_2021 <- left_join(data_2021, continents, by = "country")
          country = if_else(country == "Yemen, Rep.", "Yemen", country)
     )
 
-data_2021 <- left_join(data_2021, data_gdp1, by = "country")
+data_2021 <- left_join(data_by_continent, data_gdp1, by = "country")
 
+test_data <- data_2021 %>%
+  mutate(life_expectancy_std = scale(life_expectancy),
+         social_support_std = scale(social_support),
+         gdp_2021_std = scale(gdp_2021)) %>%
+  clean_names()
 ```
 
 ```{r Americas}
 americas_fit <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(life_ladder ~ life_expectancy + social_support + gdp_2021, data = (filter(data_2021, continent == "Americas")))
+  fit(life_ladder ~ life_expectancy_std + social_support_std + gdp_2021_std, data = (filter(test_data, continent == "Americas")))
 tidy(americas_fit)
 #life_ladder-hat = -0.38059960	 + 0.01617966*life_expectancy + 6.28850281*social_support
 glance(americas_fit)$r.squared
@@ -89,7 +94,7 @@ glance(americas_fit)$r.squared
 ```{r EU}
 europe_fit <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(life_ladder ~ life_expectancy + social_support + gdp_2021, data = (filter(data_2021, continent == "Europe")))
+  fit(life_ladder ~ life_expectancy_std + social_support_std + gdp_2021_std, data = (filter(test_data, continent == "Europe")))
 tidy(europe_fit)
 #life_ladder-hat = -9.1438412	+ 0.1571482*life_expectancy + 5.2388023*social_support
 glance(europe_fit)$r.squared
@@ -99,7 +104,7 @@ glance(europe_fit)$r.squared
 ```{r Africa}
 africa_fit <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(life_ladder ~ life_expectancy + social_support + gdp_2021, data = (filter(data_2021, continent == "Africa")))
+  fit(life_ladder ~ life_expectancy_std + social_support_std + gdp_2021_std, data = (filter(test_data, continent == "Africa")))
 
 tidy(africa_fit)
 glance(africa_fit)$r.squared
@@ -109,7 +114,7 @@ glance(africa_fit)$r.squared
 ```{r Asia}
 asia_fit <- linear_reg() %>%
   set_engine("lm") %>%
-  fit(life_ladder ~ life_expectancy + social_support + gdp_2021, data = (filter(data_2021, continent == "Asia")))
+  fit(life_ladder ~ life_expectancy_std + social_support_std + gdp_2021_std, data = (filter(test_data, continent == "Asia")))
 
 tidy(asia_fit)
 glance(asia_fit)$r.squared
