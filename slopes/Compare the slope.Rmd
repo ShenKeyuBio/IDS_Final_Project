@@ -1,0 +1,195 @@
+```{r abc}
+library(tidyverse)
+library(readxl)
+library(stats)
+slopes <- read_excel("slopes.xlsx")
+```
+
+```{r a}
+slopes %>%
+  ggplot(mapping = aes(x = continent, y = life_expectancy, color = continent))+
+  geom_point()+
+  geom_boxplot()
+
+slopes %>%
+  ggplot(mapping = aes(x = continent, y = social_support, color = continent))+
+  geom_point()+
+  geom_boxplot()
+
+slopes %>%
+  ggplot(mapping = aes(x = continent, y = gdp, color = continent))+
+  geom_point()+
+  geom_boxplot()
+
+slopes %>%
+  ggplot(mapping = aes(x = continent, y = r_square, color = continent))+
+  geom_point()+
+  geom_boxplot()
+```
+
+```{r re}
+asia_slope <- slopes %>%
+  filter(continent == "Asia")
+
+americas_slope <- slopes %>%
+  filter(continent == "Americas")
+
+europe_slope <- slopes %>%
+  filter(continent == "Europe")
+
+africa_slope <- slopes %>%
+  filter(continent == "Africa")
+```
+
+```{r t-test}
+#p=0.007715 SIG
+t.test(asia_slope$life_expectancy, 
+       y = americas_slope$life_expectancy, 
+       alternative = "two.sided",
+       paired = FALSE)
+
+#p=8.858e-05 SIG
+t.test(asia_slope$life_expectancy, 
+       y = europe_slope$life_expectancy, 
+       alternative = "two.sided",
+       paired = FALSE)
+
+#p=0.08582 NOT
+t.test(asia_slope$life_expectancy, 
+       y = africa_slope$life_expectancy, 
+       alternative = "two.sided",
+       paired = FALSE)
+
+#0.07408 NOT
+t.test(americas_slope$life_expectancy, 
+       y = africa_slope$life_expectancy, 
+       alternative = "two.sided",
+       paired = FALSE)
+
+#0.003179 SIG
+t.test(africa_slope$life_expectancy, 
+       y = europe_slope$life_expectancy, 
+       alternative = "two.sided",
+       paired = FALSE)
+
+#0.2597 NOT
+t.test(americas_slope$life_expectancy, 
+       y = europe_slope$life_expectancy, 
+       alternative = "two.sided",
+       paired = FALSE)
+```
+
+```{r t-test}
+#p=0.07884 NOT
+t.test(asia_slope$social_support, 
+       y = americas_slope$social_support, 
+       alternative = "two.sided",
+       paired = FALSE)
+
+#p=0.9035 NOT
+t.test(asia_slope$social_support, 
+       y = europe_slope$social_support, 
+       alternative = "two.sided",
+       paired = FALSE)
+
+#p=0.0001339 SIG
+t.test(asia_slope$social_support, 
+       y = africa_slope$social_support, 
+       alternative = "two.sided",
+       paired = FALSE)
+
+#0.08351 NOT
+t.test(americas_slope$social_support, 
+       y = africa_slope$social_support, 
+       alternative = "two.sided",
+       paired = FALSE)
+
+#2.761e-05 SIG
+t.test(africa_slope$social_support, 
+       y = europe_slope$social_support, 
+       alternative = "two.sided",
+       paired = FALSE)
+
+#0.04686 SIG
+t.test(americas_slope$social_support, 
+       y = europe_slope$social_support, 
+       alternative = "two.sided",
+       paired = FALSE)
+```
+
+```{r t-test}
+#p=0.0002242 SIG
+t.test(asia_slope$gdp, 
+       y = americas_slope$gdp, 
+       alternative = "two.sided",
+       paired = FALSE)
+
+#p=3.86e-05 SIG
+t.test(asia_slope$gdp, 
+       y = europe_slope$gdp, 
+       alternative = "two.sided",
+       paired = FALSE)
+
+#p=0.03763 SIG
+t.test(asia_slope$gdp, 
+       y = africa_slope$gdp, 
+       alternative = "two.sided",
+       paired = FALSE)
+
+#0.005401 SIG
+t.test(americas_slope$gdp, 
+       y = africa_slope$gdp, 
+       alternative = "two.sided",
+       paired = FALSE)
+
+#0.005506 SIG
+t.test(africa_slope$gdp, 
+       y = europe_slope$gdp, 
+       alternative = "two.sided",
+       paired = FALSE)
+
+#0.9506 NOT
+t.test(americas_slope$gdp, 
+       y = europe_slope$gdp, 
+       alternative = "two.sided",
+       paired = FALSE)
+```
+
+```{r t-test}
+#p=0.1332 NOT
+t.test(asia_slope$r_square, 
+       y = americas_slope$r_square, 
+       alternative = "two.sided",
+       paired = FALSE)
+
+#p=0.002544 SIG
+t.test(asia_slope$r_square, 
+       y = europe_slope$r_square, 
+       alternative = "two.sided",
+       paired = FALSE)
+
+#p=4.179e-07 SIG
+t.test(asia_slope$r_square, 
+       y = africa_slope$r_square, 
+       alternative = "two.sided",
+       paired = FALSE)
+
+#0.0004178 SIG
+t.test(americas_slope$r_square, 
+       y = africa_slope$r_square, 
+       alternative = "two.sided",
+       paired = FALSE)
+
+#1.338e-07 SIG
+t.test(africa_slope$r_square, 
+       y = europe_slope$r_square, 
+       alternative = "two.sided",
+       paired = FALSE)
+
+#0.014 SIG
+t.test(americas_slope$r_square, 
+       y = europe_slope$r_square, 
+       alternative = "two.sided",
+       paired = FALSE)
+```
+
