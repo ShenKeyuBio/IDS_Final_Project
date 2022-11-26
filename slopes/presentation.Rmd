@@ -1,0 +1,189 @@
+---
+title: "Group Research Proposal"
+subtitle: "World Happiness Report"
+author: "Aidan, Hrissy, Jack, Keyu"
+institute: "University of Edinburgh"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    lib_dir: libs
+    nature:
+      ratio: "16:9"
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r load-packages, include = FALSE}
+# Add any additional packages you need to this chunk
+library(tidyverse)
+library(palmerpenguins)
+library(knitr)
+library(xaringanthemer)
+library(janitor)
+library(readxl)
+```
+
+```{r setup, include=FALSE}
+# For better figure resolution
+knitr::opts_chunk$set(fig.retina = 3, dpi = 300, fig.width = 6, fig.asp = 0.618, out.width = "80%")
+```
+
+```{r load-data, include=TRUE}
+DataForTable2_1 <- read_excel("DataForTable2.1.xls") %>%
+clean_names()
+slopes <- read_excel("slopes.xlsx")
+```
+
+```{r include=FALSE}
+style_xaringan(
+  title_slide_background_image = "img/2x97kx7f.jpg"
+)
+```
+
+class: center, middle
+
+## What effect does Life Expectancy and Social Support have on Overall Happiness in the World?
+
+---
+# Life expectancy effects on life ladder
+
+```{r life_expetcancy, echo = FALSE}
+slopes %>%
+  ggplot(mapping = aes(x = continent, y = life_expectancy, color = continent))+
+  geom_point()+
+  geom_boxplot()+
+  labs(
+    x = "Continents",
+    y = "Life Expectany Coefficient"
+  )
+```
+
+---
+# Social support effects on life ladder
+
+```{r social_support, echo = FALSE}
+slopes %>%
+  ggplot(mapping = aes(x = continent, y = social_support, color = continent))+
+  geom_point()+
+  geom_boxplot()+
+  labs(
+    x = "Continents",
+    y = "Social Support Coefficient"
+  )
+```
+
+---
+
+# GDP effects on life ladder
+
+```{r gdp, echo = FALSE}
+slopes %>%
+  ggplot(mapping = aes(x = continent, y = gdp, color = continent))+
+  geom_point()+
+  geom_boxplot()+
+  labs(
+    x = "Continent",
+    y = "GDP Coefficient"
+  )
+```
+---
+
+# The Effects on Asia
+
+```{r Asia, echo = FALSE}
+asia_slope <- slopes %>%
+  filter(continent == "Asia")
+
+americas_slope <- slopes %>%
+  filter(continent == "Americas")
+
+europe_slope <- slopes %>%
+  filter(continent == "Europe")
+
+africa_slope <- slopes %>%
+  filter(continent == "Africa")
+
+asia_slope %>%
+  pivot_longer(
+  cols = c(life_expectancy, social_support, gdp), 
+  names_to = "variable", 
+  values_to = "coefficient"
+  ) %>%
+  ggplot(mapping = aes(x = coefficient, color = variable))+
+  geom_boxplot()+
+  labs(
+    x = "Variables",
+    y = "Coefficients"
+  )
+```
+---
+
+# The Effects on America
+
+```{r America, echo = FALSE}
+
+americas_slope %>%
+  pivot_longer(
+  cols = c(life_expectancy, social_support, gdp), 
+  names_to = "variable", 
+  values_to = "coefficient"
+  ) %>%
+  ggplot(mapping = aes(x = coefficient, color = variable))+
+  geom_boxplot()+
+  labs(
+    x = "Variables",
+    y = "Coefficients")
+
+```
+---
+
+# The Effects on Europe
+
+```{r Europe, echo = FALSE}
+
+europe_slope %>%
+  pivot_longer(
+  cols = c(life_expectancy, social_support, gdp), 
+  names_to = "variable", 
+  values_to = "coefficient"
+  ) %>%
+  ggplot(mapping = aes(x = coefficient, color = variable))+
+  geom_boxplot()+
+  labs(
+    x = "Variables",
+    y = "Coefficients")
+
+```
+---
+
+# The Effects on Africa
+
+```{r Africa, echo = FALSE}
+
+africa_slope %>%
+  pivot_longer(
+  cols = c(life_expectancy, social_support, gdp), 
+  names_to = "variable", 
+  values_to = "coefficient"
+  ) %>%
+  ggplot(mapping = aes(x = coefficient, color = variable))+
+  geom_boxplot()+
+  labs(
+    x = "Variables",
+    y = "Coefficients")
+
+```
+---
+
+# Limitation on R Square
+
+```{r limitation, echo = FALSE}
+slopes %>%
+  ggplot(mapping = aes(x = continent, y = r_square, color = continent))+
+  geom_point()+
+  geom_boxplot()
+```
+
+---
