@@ -7,7 +7,7 @@ The question we sought to answer is what effects do life expectancy, social supp
 
 **Hypothesis-**
 
-We expect that an increase in all three variables (life expectancy, social support, and gdp) will result in a higher happiness score (life-ladder).
+We expect that an increase in all three variables (life expectancy, social support, and gdp) will result in a higher happiness score (life-ladder). We also expect to see a difference in importance of certain variables in some continents compared to others. For example, social support may contribute more to the population's overall happiness in Europe than in the Americas.
 
 **The data-**
 
