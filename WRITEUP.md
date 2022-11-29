@@ -41,7 +41,7 @@ of the world than in others.
 We also made separate plots for each variable including all the data and color coordinated by continent and created lines of best fit for each continent 
 so we could compare the slopes more easily. DESCRIBE PLOTS WITH CONTINENTS AND LINES
 
-We also made a histogram to see the distribution of the life ladder variable. With a binwidth of 0.5, the distribution appears roughly bimodal with the higher mode being around 5 and the smaller one around 6.5/7. While the histogram is not symmetric because of the higher mode on the left, it is also not skewed either left or right.
+We also made a histogram to see the distribution of the life ladder variable. With a binwidth of 0.5, the distribution appears roughly bimodal with the higher mode being around 5 and the smaller one around 6.5 / 7. While the histogram is not symmetric because of the higher mode on the left, it is also not skewed either left or right.
 
 **Prediction Model-**
 
