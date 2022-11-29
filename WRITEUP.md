@@ -23,7 +23,7 @@ In order to make use of the linear regression and prediction models later on, we
 
 **Definition of variables-**
 
-*life-ladder:* quantified the level of happiness on a scale of 1 to 10 (1 being the lowest and 10 the highest)
+*life-ladder:* quantified the level of happiness on a scale of 1 to 10 (1 being the lowest and 10 the highest). We use "life ladder" and "happiness"                      synonymously throughout the presentation and the write up.
 
 *life-expectancy:* the healthy life expectancy at birth
 
@@ -40,6 +40,7 @@ associated with each variable for each and compared across continents to try and
 of the world than in others. 
 We also made separate plots for each variable including all the data and color coordinated by continent and created lines of best fit for each continent 
 so we could compare the slopes more easily. DESCRIBE PLOTS WITH CONTINENTS AND LINES
+
 We also made a histogram to see the distribution of the life ladder variable. With a binwidth of 0.5, the distribution appears roughly bimodal with the higher mode being around 5 and the smaller one around 6.5/7. While the histogram is not symmetric because of the higher mode on the left, it is also not skewed either left or right.
 
 **Prediction Model-**
