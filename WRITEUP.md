@@ -50,6 +50,7 @@ We also wanted to see if we could create a model that could predict a country's 
 **Findings-**
 
 *Linear Regressions:*
+
 Americas fit: life-ladder-hat = 6.042 - 0.063(life expectancy) + 0.781(social support) + 0.437(GDP)
                R^2 = 0.6339
                
