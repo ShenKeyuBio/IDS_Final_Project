@@ -74,5 +74,7 @@ TALK ABOUT 2011 MODEL
 Our prediction model performed pretty well with an r-squared of 0.815 (although a high r-squared was expected given we fitted multiple variables) and an rmse of 0.5317. The rmse seems reasonably small considering that for the testing data the minimum was 2.9362	and the maximum 7.7882.
 
 
+**Limitations**
+
 **Future-**
 MENTION T TESTS AND OTHER PLOTS
