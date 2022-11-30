@@ -50,11 +50,11 @@ We also made a histogram to see the distribution of the life ladder variable. Wi
 
 *Americas fit:* life-ladder-hat = 6.042 - 0.063(life expectancy) + 0.781(social support) + 0.437(GDP)
                
-               R^2 = 0.6339
+                 R^2 = 0.6339
                
 *Europe fit:* life-ladder-hat = 4.892 + 0.603(life expectancy) + 0.61(social support) + 0.348(GDP)
                  
-                 R^2 = 0.7397 -> 73.97% of the variation in happiness can be accounted for by the linear regression model of life expectancy, social                         support, and GDP on life ladder.
+                 R^2 = 0.7397 -> 73.97% of the variation in happiness can be accounted for by the linear regression model of life expectancy, social                        support, and GDP on life ladder.
              
 *Africa fit:* life-ladder-hat = 5.063 + 0.06(life expectancy) + 0.308(social support) + 0.541(GDP)
                
