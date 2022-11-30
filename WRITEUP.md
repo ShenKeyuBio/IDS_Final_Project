@@ -7,7 +7,7 @@ The question we sought to answer is what effects do life expectancy, social supp
 
 **Hypothesis-**
 
-We expect that an increase in all three variables (life expectancy, social support, and gdp) will result in a higher happiness score (life-ladder). We also expect to see a difference in importance of certain variables in some continents compared to others. For example, social support may contribute more to the population's overall happiness in Europe than in the Americas.
+We expect that an increase in all three variables (life expectancy, social support, and GDP) will result in a higher happiness score (life-ladder). We also expect to see a difference in importance of certain variables in some continents compared to others. For example, social support may contribute more to the population's overall happiness in Europe than in the Americas.
 
 **The data-**
 
@@ -18,7 +18,7 @@ variable for continent so we could separate countries into their respective cont
 primarily checking for name differences that resulted in the data not merging properly. We did a similar join to include data containing each country's GDP
 since we wanted to use the actual GDP figures instead of the log(GDP) provided in our original data frame. We also filtered the data to include only the 
 year we're interested in, 2011.
-In order to make use of the linear regression and prediction models later on, we had to standardize all of our data values (ie find their z-scores) so when we got coefficients later on, the numbers were comparable and we could make direct comparison between life expectancy, social support, and gdp values.
+In order to make use of the linear regression and prediction models later on, we had to standardize all of our data values (ie find their z-scores) so when we got coefficients later on, the numbers were comparable and we could make direct comparison between life expectancy, social support, and GDP values.
 
 
 **Definition of variables-**
