@@ -43,9 +43,6 @@ so we could compare the slopes more easily. DESCRIBE PLOTS WITH CONTINENTS AND L
 
 We also made a histogram to see the distribution of the life ladder variable. With a binwidth of 0.5, the distribution appears roughly bimodal with the higher mode being around 5 and the smaller one around 6.5 / 7. While the histogram is not symmetric because of the higher mode on the left, it is also not skewed either left or right.
 
-**Prediction Model-**
-
-We also wanted to see if we could create a model that could predict a country's life ladder score. We split the 2011 data into a train and test set and used a linear regression model since logistic regression would not make sense in the case of our data. We made a recipe, workflow, fitted the data, and then created a prediction model that outputs a predicted life ladder score when given a country's life expectancy, social support, and GDP. 
 
 **Findings-**
 
@@ -70,8 +67,11 @@ Based on the slope coefficients from the linear regression models for each conti
 **TALK ABOUT 2011 MODEL**
 **NOTE: MAYBE WE SHOULD BE LOOKING AT THE ADJUSTED R^2 BC WE HAVE MULTIPLE PREDICTORS**
 
+**Prediction Model-**
 
-*Prediction Model:*
+We also wanted to see if we could create a model that could predict a country's life ladder score. We split the 2011 data into a train and test set and used a linear regression model since logistic regression would not make sense in the case of our data. We made a recipe, workflow, fitted the data, and then created a prediction model that outputs a predicted life ladder score when given a country's life expectancy, social support, and GDP. 
+
+
 Our prediction model performed pretty well with an r-squared of 0.815 (although a high r-squared was expected given we fitted multiple variables) and an rmse of 0.5317. The rmse seems reasonably small considering that for the testing data the minimum was 2.9362	and the maximum 7.7882.
 
 
