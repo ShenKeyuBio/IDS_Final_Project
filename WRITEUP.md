@@ -29,7 +29,7 @@ In order to make use of the linear regression and prediction models later on, we
 
 *social support:* having someone to count on in times of trouble (binary response of 0 (no) or 1 (yes))
 
-*gdp:* gross domestic product for each country, measured in thousands of USD
+*GDP:* gross domestic product for each country, measured in thousands of USD
 
 
 **Method-**
