@@ -72,7 +72,7 @@ Based on the slope coefficients from the linear regression models for each conti
 We also wanted to see if we could create a model that could predict a country's life ladder score. We split the 2011 data into a train and test set and used a linear regression model since logistic regression would not make sense in the case of our data. We made a recipe, workflow, fitted the data, and then created a prediction model that outputs a predicted life ladder score when given a country's life expectancy, social support, and GDP. 
 
 
-Our prediction model performed pretty well with an r-squared of 0.815 (although a high r-squared was expected given we fitted multiple variables) and an rmse of 0.5317. The rmse seems reasonably small considering that for the testing data the minimum was 2.9362	and the maximum 7.7882.
+Our prediction model performed pretty well with an r-squared of 0.815 (although a high r-squared was expected given we fitted multiple variables) and an rmse of 0.5317. The rmse seems reasonably small considering that for the testing data the minimum was 2.9362	and the maximum was 7.7882.
 
 
 **Limitations**
