@@ -197,6 +197,13 @@ predict_test_2011
 rsq(predict_test_2011, truth = life_ladder, estimate = .pred)
 
 rmse(predict_test_2011, truth = life_ladder, estimate = .pred)
+
+
+all <- full_join(test_2011, train_2011)
+
+x <- mutate(predict_test_2011, diff = abs(life_ladder - .pred)) %>%
+  arrange(desc(diff))
+View(x)
 ```
 
 ```{r v validation}
