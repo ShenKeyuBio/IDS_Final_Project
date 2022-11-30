@@ -58,7 +58,7 @@ We also wanted to see if we could create a model that could predict a country's 
                  R^2 = 0.7397 -> 73.97% of the variation in happiness can be accounted for by the linear regression model of life expectancy, social                         support, and gdp on life ladder.
              
 *Africa fit:* life-ladder-hat = 5.063 + 0.06(life expectancy) + 0.308(social support) + 0.541(GDP)
-               R^2 = 0.4013 -> 40.13% of the variation in happiness can be accounted for by the linear regression model of life expectancy, social support,                 and gdp on life ladder. This R^2 is significantly lower than those for the other continents. Looking at the scatterplot, it can be seen                     that the data does not have a very strong linear trend. **SHOULD WE MAKE A RESIDUAL PLOT??**
+               R^2 = 0.4013 -> 40.13% of the variation in happiness can be accounted for by the linear regression model of life expectancy, social support,                 and gdp on life ladder. This R^2 is significantly lower than those for the other continents. Looking at the scatterplot, it can be seen                     that the data does not have a very strong linear trend.
 
 *Asia fit:*   life-ladder-hat = 5.308 + 0.4(life expectancy) + 0.315(social support) + 0.429(GDP)
               R^2 = 0.6273 -> 62.73% of the variation in happiness can be accounted for by the linear regression model of life expectancy, social support,                 and gdp on life ladder.
