@@ -59,12 +59,10 @@ We also made a histogram to see the distribution of the life ladder variable. Wi
 
 *Asia fit:*   life-ladder-hat = 5.308 + 0.4(life expectancy) + 0.315(social support) + 0.429(GDP)
                R^2 = 0.6273 -> 62.73% of the variation in happiness can be accounted for by the linear regression model of life expectancy, social support,                 and gdp on life ladder.
-           
-*2011 fit:*   life-ladder-hat = 4.765e-01 + 3.573e-02(life expectancy) + 3.01e+00(social support) + 2.205e-05(GDP)
-                R^2 = 0.6921 -> 69.21% of the variation in happiness can be accounted for by the linear regression model of life expectancy, social                          support, and gdp on life ladder.
+               
            
 Based on the slope coefficients from the linear regression models for each continent, we can see that life expectancy seems to have the biggest impact on life ladder in Europe and the smallest in the Americas. The Americas actually have a negative slope coefficient for life expectancy which implies that higher life expectancy results in lower happiness scores which does not make sense. We can also see that social support contributed the most to life ladder in the Americas, secondly in Europe, and then much less in Africa and Asia which have similar slope coefficients. When it comes to GDP, the slope coefficients are more similar across all continents than they were for the other variables. Africa has the highest of 0.541 and Europe had the lower of 0.348. We believe that these differences in the slope coefficients can be explained by cultural differences between the different continents. 
-**TALK ABOUT 2011 MODEL**
+
 
 **Prediction Model-**
 
