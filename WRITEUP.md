@@ -65,7 +65,6 @@ We also made a histogram to see the distribution of the life ladder variable. Wi
            
 Based on the slope coefficients from the linear regression models for each continent, we can see that life expectancy seems to have the biggest impact on life ladder in Europe and the smallest in the Americas. The Americas actually have a negative slope coefficient for life expectancy which implies that higher life expectancy results in lower happiness scores which does not make sense. We can also see that social support contributed the most to life ladder in the Americas, secondly in Europe, and then much less in Africa and Asia which have similar slope coefficients. When it comes to GDP, the slope coefficients are more similar across all continents than they were for the other variables. Africa has the highest of 0.541 and Europe had the lower of 0.348. We believe that these differences in the slope coefficients can be explained by cultural differences between the different continents. 
 **TALK ABOUT 2011 MODEL**
-**NOTE: MAYBE WE SHOULD BE LOOKING AT THE ADJUSTED R^2 BC WE HAVE MULTIPLE PREDICTORS**
 
 **Prediction Model-**
 
