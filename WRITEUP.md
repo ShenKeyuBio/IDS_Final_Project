@@ -76,8 +76,8 @@ Our prediction model performed pretty well with an r-squared of 0.815 (although 
 
 
 **Limitations**
-no data on countries in oceania (except new zealand and australia) and limited data on countries in the caribbean. 
-no data on variables such as crime, travel
+1) No data on countries in Oceania (except New Zealand and Australia) and limited data on countries in the Caribbean. 
+2) No data on variables such as crime, travel, and others that we could have used.
 
 **Future-**
 MENTION T TESTS AND OTHER PLOTS
